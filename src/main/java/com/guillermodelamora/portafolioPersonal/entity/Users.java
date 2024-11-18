@@ -25,6 +25,6 @@ public class Users {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
     private Account account;
 }

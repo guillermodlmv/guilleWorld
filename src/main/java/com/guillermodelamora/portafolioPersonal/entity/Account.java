@@ -21,7 +21,7 @@ public class Account {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "users_id", nullable = false)
     private Users users;
 
     @Column(nullable = false)
