@@ -21,8 +21,8 @@ public class Account {
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "users_id", nullable = false)
-    private Users users;
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(nullable = false)
     private BigDecimal balance = BigDecimal.ZERO;
