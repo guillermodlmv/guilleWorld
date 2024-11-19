@@ -18,6 +18,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     // Buscar transacciones de una cuenta
     List<Transaction> findByAccount(Account account);
 
+    // Buscar transacciones de una cuenta
+    List<Transaction> findByAccountId(Long accountId);
+
     // Buscar transacciones de una cuenta entre un rango de fechas
     List<Transaction> findByAccountAndTimestampBetween(Account account, LocalDateTime startDate, LocalDateTime endDate);
 
@@ -33,8 +36,14 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     // Contar el número de transacciones de una cuenta
     Long countByAccount(Account account);
 
+    // Contar el número de transacciones de una cuenta por su id
+    Long countByAccountId(Long accountId);
+
     // Eliminar transacciones de una cuenta
     void deleteByAccount(Account account);
+
+    // Eliminar transacciones de una cuenta por su id
+    void deleteByAccountId(Long accountId);
 
     // Buscar transacciones cuyo monto sea mayor que un valor específico
     List<Transaction> findByAmountGreaterThan(BigDecimal amount);
@@ -63,4 +72,12 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
                            @Param("timestamp") LocalDateTime timestamp,
                            @Param("description") String description);
 
+    // Buscar transacciones por ID de cuenta y rango de fechas
+    List<Transaction> findByAccountIdAndTimestampBetween(Long accountId, LocalDateTime startDate, LocalDateTime endDate);
+
+    // Buscar transacciones por ID de cuenta y monto mayor que un valor
+    List<Transaction> findByAccountIdAndAmountGreaterThan(Long accountId, BigDecimal amount);
+
+    // Buscar transacciones por ID de cuenta y tipo (CREDIT o DEBIT)
+    List<Transaction> findByAccountIdAndType(Long accountId, String type);
 }

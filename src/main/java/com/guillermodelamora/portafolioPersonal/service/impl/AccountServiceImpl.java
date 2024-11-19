@@ -2,50 +2,68 @@ package com.guillermodelamora.portafolioPersonal.service.impl;
 
 import com.guillermodelamora.portafolioPersonal.entity.Account;
 import com.guillermodelamora.portafolioPersonal.entity.Transaction;
+import com.guillermodelamora.portafolioPersonal.repository.AccountRepository;
+import com.guillermodelamora.portafolioPersonal.repository.TransactionRepository;
 import com.guillermodelamora.portafolioPersonal.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class AccountServiceImpl implements AccountService {
+    @Autowired
+    AccountRepository accountRepository;
+
+    @Autowired
+    TransactionRepository transactionRepository;
+
     @Override
     public Account createAccount(Account account) {
-        return null;
+        return accountRepository.save(account);
     }
 
     @Override
     public Optional<Account> getAccountById(Long id) {
-        return Optional.empty();
+        return accountRepository.findById(id);
     }
 
     @Override
     public Optional<Account> getAccountByUserId(Long userId) {
-        return Optional.empty();
+        return accountRepository.findByUserId(userId);
     }
 
     @Override
     public List<Account> getAccountsByBalanceGreaterThan(BigDecimal balance) {
-        return List.of();
+        return accountRepository.findByBalanceGreaterThan(balance);
     }
 
     @Override
     public void updateBalance(Long accountId, BigDecimal balance) {
-
+        Optional<Account> account = accountRepository.findById(accountId);
+        if (account.isPresent()) {
+            Account updatedAccount = account.get();
+            updatedAccount.setBalance(balance);
+            accountRepository.save(updatedAccount);
+        } else {
+            throw new IllegalArgumentException("Account with id " + accountId + " not found.");
+        }
     }
 
     @Override
     public List<Transaction> getTransactionsByAccount(Long accountId) {
-        return List.of();
+        return transactionRepository.findByAccountId(accountId);
     }
 
     @Override
     public Long countTransactionsByAccount(Long accountId) {
-        return 0L;
+        return transactionRepository.countByAccountId(accountId);
     }
 
     @Override
     public void deleteTransactionsByAccount(Long accountId) {
-
+        transactionRepository.deleteByAccountId(accountId);
     }
 }
