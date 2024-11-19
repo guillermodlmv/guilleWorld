@@ -46,21 +46,21 @@ public class SecurityConfig {
                         .requestMatchers("/user/login", "/user/signup", "/user/forgotPassword")
                         .permitAll()
                         .anyRequest()
-                        .authenticated()
-                )
-                .cors(
-                        httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource((request) -> {
-                            CorsConfiguration config = new CorsConfiguration();
-                            config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-                            config.setAllowedMethods(Collections.singletonList("*"));
-                            config.setAllowCredentials(true);
-                            config.setAllowedHeaders(Collections.singletonList("*"));
-                            config.setExposedHeaders(List.of("Authorization"));
-                            config.setMaxAge(3600L);
-
-                            return config;
-                        })
+                        .permitAll()
                 );
+//                .cors(
+//                        httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource((request) -> {
+//                            CorsConfiguration config = new CorsConfiguration();
+//                            config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+//                            config.setAllowedMethods(Collections.singletonList("*"));
+//                            config.setAllowCredentials(true);
+//                            config.setAllowedHeaders(Collections.singletonList("*"));
+//                            config.setExposedHeaders(List.of("Authorization"));
+//                            config.setMaxAge(3600L);
+//
+//                            return config;
+//                        })
+//                );
         httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
